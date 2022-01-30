@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.IAndroidDAO">
+
+	<!-- 구간에 해당하는 게시물을 추출한다. -->
+	<select id="memberList" resultType="mybatis.MemberVO" parameterType="mybatis.MemberVO">
+		SELECT * FROM member
+	</select>
+	
+	
+	<select id="memberLogin" resultType="mybatis.MemberVO">
+		SELECT * FROM member WHERE id=#{id} and pass=#{pass}
+	</select>
+	
+</mapper>
