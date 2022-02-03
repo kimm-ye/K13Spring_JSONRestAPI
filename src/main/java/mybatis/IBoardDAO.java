@@ -15,4 +15,7 @@ public interface IBoardDAO {
 	
 	//게시물 내용보기
 	public ArrayList<BoardDTO> view(ParameterDTO parameterDTO);
+	
+	//게시물 작성
+	public int write(BoardDTO boardDTO);
 }

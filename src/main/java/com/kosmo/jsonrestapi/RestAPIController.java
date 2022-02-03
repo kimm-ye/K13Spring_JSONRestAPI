@@ -1,5 +1,6 @@
 package com.kosmo.jsonrestapi;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,9 +8,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import mybatis.BoardDTO;
@@ -102,6 +107,79 @@ public class RestAPIController {
 			map.put("postdate", dto.getPostdate().toString());
 			map.put("visitcount", dto.getVisitcount());
 		}
+		
+		return map;
+	}
+	
+	//Get방식으로 요청받은 후 글쓰기 처리(테스트용)
+	@RequestMapping(value="/restapi/boardWrite.do", method = RequestMethod.GET)
+	@ResponseBody 
+	//커맨드 객체를 통해 폼값을 한번에 전달 받는다.
+	public Map<String, String> writeGet(BoardDTO boardDTO){
+		
+		System.out.println("write 호출됨");
+		
+		System.out.println("아이디=" + boardDTO.getId());
+		System.out.println("제목=" + boardDTO.getTitle());
+		System.out.println("내용=" + boardDTO.getContent());
+		
+		//Mapper의 write 메서드 호출. <insert 엘리먼트의 경우 항상 0,1을 반환한다.
+		int affected = sqlSession.getMapper(IBoardDAO.class).write(boardDTO);
+		
+		//결과 데이터를 JSON객체 형태로 출력하기 위해 Map컬렉션 생성
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if(affected==1) 
+			map.put("result", "success");
+		else 
+			map.put("result", "fail");
+		
+		return map;
+	}
+	
+	/*
+	React연동위해 추가한 메서드. 앞에서 작성한 메서드와 요청명이 동일하지만
+	전송방식이 다르므로 각 요청에 따라 구분된다.
+	 */
+	@RequestMapping(value="/restapi/boardWrite.do", method = RequestMethod.POST)
+	@ResponseBody 
+	/*
+	React에서 fetch()함수를 통해 POST방식으로 요청한 데이터를 받을때
+	body에 폼값을 실어서 보내므로 @RequestBody 어노테이션을 통해 받는다.
+	*/
+	public Map<String, String> writePost(@RequestBody String data, BoardDTO boardDTO){
+		
+		//전송받은 데이터를 디코딩 처리한다. (현재 버전에서는 사용하지 않는다라고 경고가 뜨지만 사용할 수 있다.)
+		System.out.println("write 호출됨");
+		data = URLDecoder.decode(data);
+		System.out.println("data=" + data);
+		
+		//json-simple 의존설정 필요. 해당 객체를 통해 JSON데이터를 파싱한다.
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj = null;
+		try {
+			//앞에서 디코딩 처리한 데이터를 파싱한다.
+			jsonObj = (JSONObject) jsonParser.parse(data);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("아이디=" + boardDTO.getId());
+		System.out.println("제목=" + boardDTO.getTitle());
+		System.out.println("내용=" + boardDTO.getContent());
+		
+		//파싱한 데이터를 DTO객체 저장한다.
+		boardDTO.setId(jsonObj.get("id").toString());
+		boardDTO.setTitle(jsonObj.get("title").toString());
+		boardDTO.setContent(jsonObj.get("content").toString());
+		
+		int affected = sqlSession.getMapper(IBoardDAO.class).write(boardDTO);
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if(affected==1) 
+			map.put("result", "success");
+		else 
+			map.put("result", "fail");
 		
 		return map;
 	}

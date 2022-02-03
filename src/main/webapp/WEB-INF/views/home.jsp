@@ -42,5 +42,12 @@
 	<br>
 	<a href="./android/memberLogin.do?id=kosmo&pass=1111" target="_blank">회원로그인하기(객체형태)</a>
 	
+	
+	<h2>글쓰기</h2>
+	<li>
+		<a href="./restapi/boardWrite.do?title=RestAPI로작성하기1&content=내용내용&id=musthave" target="_blank" >글 작성하기</a>
+	</li>
+	
+	
 </body>
 </html>
