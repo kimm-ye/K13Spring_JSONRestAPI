@@ -8,5 +8,6 @@ public class MemberVO {
 	private String id;
 	private String pass;
 	private String name;
-	private java.sql.Date regidate;
+	//private java.sql.Date regidate;
+	private String regidate;
 }
