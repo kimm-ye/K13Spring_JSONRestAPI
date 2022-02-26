@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    #lay_top{height: 50px; line-height: 50px; background-color: blueviolet; font-size: 1.5em; text-align: center;}
+    #lay_top p{width: 100%;}
+    #lay_left{background-color: antiquewhite; font-size: 1.5em; text-align: center;}
+    #lay_left p{width: 100%;}
+    #lay_contents{font-size: 12px; padding: 20px 10px;}
+    #lay_contents th{text-align: center;}
+    #lay_contents td{padding: 10px;}
+    #lay_bottom{height: 50px; line-height: 50px; background-color: greenyellow; font-size: 1.5em; text-align: center;}
+    #lay_bottom p{width: 100%;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row" id="lay_top">
+        <p>TOP</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-2" id="lay_left">
+            <p>LEFT</p>
+        </div>
+        <div class="col-lg-10" id="lay_contents">
+            <h2>게시판내용보기</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <td>번호</td>
+                    <td>1000</td>
+                    <td>작성자</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>작성일</td>
+                    <td>1000</td>
+                    <td>조회수</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td colspan="3">1000</td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td colspan="3" height="100">1000</td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="center">                     
+                        <button type="button" onClick="">
+                            리스트바로가기
+                        </button>
+                    </td>
+                </tr>                                
+            </table>
+        </div>
+    </div>
+    <div class="row" id="lay_bottom">
+        <p>BOTTOM</p>
+    </div>
+</div>
+
+</body>
+</html>
